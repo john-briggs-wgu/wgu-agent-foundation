@@ -1,0 +1,16 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "_comment": "GATEWAY-ROUTED tools. Both MCP servers point at the WGU Solo Agent Gateway's /mcp routes instead of the vendors directly, so every tool call flows through one governed door (auth/policy/rate-limit/observability). No token in config. LOCAL values use the port-forward at http://localhost:4000. PRODUCTION swaps these to https://gateway.wgu.edu/mcp/<tool>. AUTH NOTE: full per-user auth through the gateway requires Entra on-behalf-of (OBO) at the gateway — designed, not yet built; until then the gateway routes/logs traffic but does not itself perform the vendor OAuth. See docs/adr/007-mcp-tool-authentication.md in WGU-edu/wgu-devex-platform.",
+  "mcpServers": {
+    "wgu-github": {
+      "type": "http",
+      "url": "http://localhost:4000/mcp/github",
+      "oauth": {}
+    },
+    "wgu-jira": {
+      "type": "http",
+      "url": "http://localhost:4000/mcp/jira",
+      "oauth": {}
+    }
+  }
+}
