@@ -17,12 +17,12 @@ WGU Agent Foundation — how it works
 ┌───────────────────────────────────────────────────────┐
 │  Kiro (the engineer's AI agent)                                │
 │                                                                │
-│   ┌────────────────────┐        ┌──────────────────────────┐  │
-│   │  steering/  ·GUIDES·│        │  skills/         ·GUIDES· │  │
-│   │  WGU guardrails +   │        │  adversarial review,     │  │
-│   │  context (client-   │        │  TDD, PR flow, secure    │  │
-│   │  side KNOWLEDGE)    │        │  coding (client-side)    │  │
-│   └────────────────────┘        └──────────────────────────┘  │
+│   ┌────────────────────────────────────────────────┐  │
+│   │  skills/  ·GUIDES·  (client-side KNOWLEDGE)                │  │
+│   │   • wgu-pilot-gateway-guardrails: secure coding, TDD,     │  │
+│   │     no-workarounds, memory-first (+ references/ rules)   │  │
+│   │   • (future) adversarial review, PR flow, …              │  │
+│   └────────────────────────────────────────────────┘  │
 │                                                                │
 │   mcp.json ─ points every tool at the WGU door, NOT the vendor │
 └──────────────────────────────────┬────────────────────────────┘
@@ -44,14 +44,14 @@ WGU Agent Foundation — how it works
             │  (Jira MCP)   │          │  (GitHub MCP)  │
             └───────────────┘          └───────────────┘
 
-  GUIDES     = shipped in the Power, run on the engineer's machine (knowledge)
+  GUIDES     = shipped in the Power's skills/, run on the engineer's machine (knowledge)
   GUARANTEES = enforced by the gateway, server-side (identity, audit, policy)
 ```
 
 **The core distinction (never blur these):**
 
-- **Guardrails GUIDE** — they are client-side knowledge (steering + skills) that
-  shape how the agent writes, reviews, and commits. They coach; they do not enforce.
+- **Guardrails GUIDE** — they are client-side knowledge (shipped as a **skill** in `skills/`)
+  that shapes how the agent writes, reviews, and commits. They coach; they do not enforce.
 - **The gateway GUARANTEES** — it physically sits in the request path, so identity
   checks, per-user token brokering, rate limits, policy, and audit are enforced
   server-side. You cannot route around it.
@@ -64,9 +64,13 @@ WGU Agent Foundation — how it works
 |---|---|
 | `plugin.json` | Power manifest (name, version, description, activation keywords). |
 | `mcp.json` | Governed MCP servers — Atlassian + GitHub, pointed at the WGU gateway door. |
-| `steering/` | WGU engineering guardrails + WGU context (the `.md` rules the agent follows). |
-| `skills/` | Bundled skills — e.g. adversarial review, TDD, PR flow, secure coding. |
+| `skills/` | Bundled skills Kiro loads from the Power. The `wgu-pilot-gateway-guardrails` skill carries the WGU engineering guardrails (secure coding, TDD, no-workarounds, memory-first) plus its `references/` rule files. Future skills (adversarial review, PR flow) go here too. |
 | `docs/` | Onboarding + the contributing guide for building the *next* WGU Power. |
+
+> **Where do the guardrails live?** In `skills/wgu-pilot-gateway-guardrails/` — Kiro loads a
+> Power's `skills/`, so guardrails ship as a skill (with `references/` for the detailed rules),
+> not as a separate top-level directory. (Kiro's workspace-level `.kiro/steering/*.md` is a
+> different, complementary mechanism for per-workspace rules — not part of an installed Power.)
 
 ---
 
@@ -111,7 +115,7 @@ Once installed (guardrails work immediately; tools need the gateway reachable):
 
 ## What's real vs. mock vs. blocked (honest status)
 
-- ✅ **Guardrails + skills** — real and active the moment you install (client-side knowledge).
+- ✅ **Guardrails skill** — real and active the moment you install (client-side knowledge).
 - ✅ **Gateway routing + logging** — real: every tool call flows through the WGU door and is logged.
 - ✅ **Gateway identity check + brokered auth** — demonstrated locally end-to-end against an
   Entra **mock** (the mock auto-approves the login step; all other OAuth mechanics are real).
@@ -127,7 +131,7 @@ full comparison and honest demo inventory.
 
 - **Naming:** `wgu-` prefix, lowercase-with-hyphens.
 - **Versioning:** semver from day one (`plugin.json` `version`) so downstream repos pin a known-good baseline.
-- **Layout:** `plugin.json` + `mcp.json` + `steering/` + `skills/` + `docs/` at the repo root.
+- **Layout:** `plugin.json` + `mcp.json` + `skills/` + `docs/` at the repo root.
 - **Adding to it:** see `docs/contributing.md` for how to add a new MCP server or skill so the
   next WGU Power inherits the pattern instead of reinventing it.
 

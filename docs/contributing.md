@@ -14,10 +14,15 @@ every new Power (and every addition to this one) stays consistent and predictabl
   ├── README.md        # what it is, how to install, what's inside (with a data-flow diagram)
   ├── plugin.json      # manifest: name, version, description, keywords, author, license
   ├── mcp.json         # MCP server config (governed — pointed at the gateway)
-  ├── steering/        # guardrails + WGU context (.md rules)
-  ├── skills/          # bundled skills
+  ├── skills/          # bundled skills Kiro loads (guardrails live here as a skill)
   └── docs/            # onboarding + this contributing guide
   ```
+
+> **Where guardrails live:** Kiro loads a Power's `skills/`, so WGU guardrails ship as a **skill**
+> (`skills/wgu-pilot-gateway-guardrails/SKILL.md` + a `references/` folder of rule files), not as a
+> separate top-level directory. Kiro's workspace-level `.kiro/steering/*.md` is a different,
+> complementary mechanism (per-workspace rules loaded by the default agent) — not part of an
+> installed Power. Don't add a top-level `steering/` to a Power expecting Kiro to load it.
 
 ## Closed schemas — do NOT add fields
 
@@ -54,19 +59,21 @@ schema doesn't define gets them **ignored or rejected** by Kiro. Specifically:
 ## How to add a new skill
 
 1. Create `skills/<skill-name>/SKILL.md`. Keep it focused on one capability (e.g. "adversarial
-   review", "PR flow").
-2. Reference any supporting rules under `steering/` rather than duplicating them (DRY).
-3. If the skill ships helper files (scripts, references), put them alongside `SKILL.md` in the
-   skill's folder.
+   review", "PR flow"). Kiro loads it from the Power's `skills/`.
+2. Put detailed rule material in a `references/` folder alongside `SKILL.md` and point the skill at
+   it, rather than inlining everything (keeps the skill body small; references load on demand).
+3. If the skill ships helper files (scripts, references), put them in the skill's own folder.
 4. Bump `plugin.json` `version`.
 
 ## How to add / update a guardrail
 
-1. Guardrails live in `steering/` as `.md` rules. One coherent concern per file.
+1. WGU guardrails live inside the guardrails **skill** —
+   `skills/wgu-pilot-gateway-guardrails/` (the `SKILL.md` summarizes; `references/*.md` hold the
+   detailed rules). Add or edit a rule file there, one coherent concern per file.
 2. If a guardrail is a WGU-wide standard, prefer vendoring it from the canonical source in
    `WGU-edu/wgu-devex-platform` (note the source in a comment) rather than forking it here.
 3. Remember: guardrails **guide** (client-side). Anything that must be **guaranteed** belongs on
-   the **gateway** (server-side policy), not in a steering file.
+   the **gateway** (server-side policy), not in a skill.
 
 ## Before you publish
 
