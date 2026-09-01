@@ -3,13 +3,11 @@
   "mcpServers": {
     "wgu-github": {
       "type": "streamable-http",
-      "url": "http://localhost:4000/mcp/github",
-      "oauth": {}
+      "url": "http://localhost:4000/mcp/github"
     },
     "wgu-jira": {
       "type": "streamable-http",
-      "url": "http://localhost:4000/mcp/jira",
-      "oauth": {}
+      "url": "http://localhost:4000/mcp/jira"
     }
   }
 }
