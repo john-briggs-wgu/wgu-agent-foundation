@@ -1,15 +1,17 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wgu-pilot-gateway",
-  "version": "0.1.0",
-  "description": "WGU pilot bundle, gateway-routed variant — installs WGU's engineering guardrails (governance knowledge) PLUS the Jira and GitHub MCP tools pointed at the WGU Solo Agent Gateway. Tool traffic flows through one governed door (auth, policy, rate-limit, observability) instead of each client calling vendors directly. Demonstrates 'guides vs guarantees': guardrails guide the agent client-side; the gateway governs tool traffic server-side.",
+  "version": "0.1.1",
+  "description": "WGU pilot bundle (gateway-routed): installs WGU engineering guardrails plus Jira and GitHub MCP tools routed through the WGU Solo Agent Gateway, so all tool traffic flows through one governed door for auth, policy, rate limiting, and observability.",
   "author": {
-    "name": "WGU Enterprise Architecture — Developer Experience",
+    "name": "WGU Enterprise Architecture",
     "url": "https://github.com/WGU-edu/wgu-devex-platform"
   },
+  "homepage": "https://github.com/WGU-edu/wgu-devex-platform",
+  "repository": "https://github.com/WGU-edu/wgu-devex-platform",
   "keywords": [
-    "wgu-pilot-gateway",
     "wgu",
+    "wgu-pilot-gateway",
     "gateway",
     "solo",
     "guardrails",
@@ -17,6 +19,5 @@
     "github",
     "governance"
   ],
-  "license": "MIT",
-  "repository": "https://github.com/WGU-edu/wgu-devex-platform"
+  "license": "MIT"
 }
