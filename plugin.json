@@ -1,14 +1,14 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "wgu-pilot-gateway",
-  "version": "0.1.4",
-  "description": "WGU pilot bundle (gateway-routed): installs WGU engineering guardrails plus Jira and GitHub MCP tools routed through the WGU Solo Agent Gateway, so all tool traffic flows through one governed door for auth, policy, rate limiting, and observability.",
+  "name": "wgu-agent-foundation",
+  "version": "0.2.0",
+  "description": "WGU's foundational agent Power: engineering guardrails, WGU context, and a starter set of governed MCP servers (Atlassian, GitHub) and skills, routed through the WGU Solo Agent Gateway so all tool traffic flows through one governed door for auth, policy, rate limiting, and observability.",
   "author": {
     "name": "WGU Enterprise Architecture",
     "url": "https://github.com/WGU-edu/wgu-devex-platform"
   },
   "homepage": "https://github.com/WGU-edu/wgu-devex-platform",
-  "repository": "https://github.com/WGU-edu/wgu-devex-platform",
+  "repository": "https://github.com/john-briggs-wgu/wgu-agent-foundation",
   "keywords": [
     "jira",
     "ticket",
@@ -26,9 +26,11 @@
     "secure coding",
     "tdd",
     "code quality",
+    "adversarial review",
     "wgu",
     "governance",
-    "gateway"
+    "gateway",
+    "foundation"
   ],
   "license": "MIT"
 }
