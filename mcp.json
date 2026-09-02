@@ -1,13 +1,13 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
+    "wgu-jira": {
+      "type": "streamable-http",
+      "url": "http://localhost:4000/mcp/atlassian"
+    },
     "wgu-github": {
       "type": "streamable-http",
       "url": "http://localhost:4000/mcp/github"
-    },
-    "wgu-jira": {
-      "type": "streamable-http",
-      "url": "http://localhost:4000/mcp/jira"
     }
   }
 }
